@@ -20,6 +20,7 @@ return new class extends Migration
         
         // Schema::table('students', function (Blueprint $table) {
         //     $table->foreign('user_id')->references('id')->on('users');
+        //     $table->foreign('guardian_user_id')->references('id')->on('users');
         // });
     }
 

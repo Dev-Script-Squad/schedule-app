@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('event_content', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('subtitle');
+            $table->string('subtitle')->nullable();
             $table->string('description');
-            // $table->string('background_image');     TIPO  ?
-            // $table->string('card_image');     TIPO  ?
-            // $table->string('card_color');     TIPO  ?    
+            $table->string('background_image')->nullable();
+            $table->string('card_image')->nullable();
+            $table->string('card_color')->nullable();
             $table->timestamps();
         });
     }

@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->unsignedInteger('teacher_id');
             $table->string('course');
             $table->string('weak_day');
-            $table->date('time_start');
-            $table->date('time_end'); 
+            $table->dateTime('time_start');
+            $table->dateTime('time_end'); 
             $table->unsignedInteger('event_content_id');
             $table->timestamps();
         });

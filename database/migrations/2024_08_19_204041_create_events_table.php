@@ -14,11 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('type');
-            $table->date('start');
-            $table->date('end');
-            $table->unsignedInteger('class_id');
+            $table->dateTime('start');
+            $table->dateTime('end');
+            $table->unsignedInteger('class_id')->nullable();
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('student_id');
+            $table->unsignedInteger('student_id')->nullable();
             $table->unsignedInteger('event_content_id');
             $table->timestamps();
         });

@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->string('educational_degree');
-            $table->string('specialty');
+            $table->string('educational_degree')->nullable();
+            $table->string('specialty')->nullable();
             $table->timestamps();
         });
 

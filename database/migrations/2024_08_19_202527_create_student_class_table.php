@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedInteger('student_id');
             $table->unsignedInteger('class_id');
-            $table->string('current');
+            $table->boolean('current')->default(false);
             $table->timestamps();
         });
 

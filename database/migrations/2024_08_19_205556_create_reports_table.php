@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->date('date');
+            $table->dateTime('date');
             $table->string('type');
             $table->unsignedInteger('student_id');
             $table->unsignedInteger('event_class_id');
