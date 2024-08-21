@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_type_id',
+        'role',
     ];
 
     /**
@@ -43,5 +45,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function userTypeRelated()
+    {
+        return $this->hasOne(UserType::class, 'user_type_id');
     }
 }
