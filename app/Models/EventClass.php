@@ -5,24 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class EventClass extends Model
 {
     use HasFactory;
-    protected $table = 'events';
+    protected $table = 'event_class';
     protected $primarykey = 'id';
     protected $fillable = [
-        'title',
-        'type',
-        'start',
-        'end',
         'school_class_id',
-        'user_id',
-        'student_id',
+        'teacher_id',
+        'course',
+        'week_day',
+        'time_start',
+        'time_end',
         'event_content_id'
     ];
-    // public function user()
-    // {
-    //     return $this->hasOne(User::class);
-    // }
-
 }

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('type');
             $table->dateTime('start');
             $table->dateTime('end');
-            $table->unsignedInteger('class_id')->nullable();
+            $table->unsignedInteger('school_class_id')->nullable();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('student_id')->nullable();
             $table->unsignedInteger('event_content_id');
@@ -24,7 +24,7 @@ return new class extends Migration {
         });
 
         // Schema::table('events', function (Blueprint $table) {
-        //     $table->foreign('class_id')->references('id')->on('classes');
+        //     $table->foreign('school_class_id')->references('id')->on('classes');
         //     $table->foreign('user_id')->references('id')->on('users');
         //     $table->foreign('student_id')->references('id')->on('students');
         //     $table->foreign('event_content_id')->references('id')->on('event_content');

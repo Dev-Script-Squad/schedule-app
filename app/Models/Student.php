@@ -24,4 +24,16 @@ class Student extends Model
     {
         return $this->hasOne(User::class, 'guardian_user_id');
     }
+    public function classes()
+    {
+        return $this->belongsToMany(SchoolClass::class, 'student_class')
+            ->withPivot('current')
+            ->withTimestamps();
+    }
+    public function currentClass()
+    {
+        return $this->belongsToMany(SchoolClass::class, 'student_class')
+            ->wherePivot('current', true)
+            ->withTimestamps();
+    }
 }

@@ -13,14 +13,14 @@ return new class extends Migration {
         Schema::create('student_class', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('student_id');
-            $table->unsignedInteger('class_id');
+            $table->unsignedInteger('school_class_id');
             $table->boolean('current')->default(false);
             $table->timestamps();
         });
 
         // Schema::table('student_class', function (Blueprint $table) {
         //     $table->foreign('student_id')->references('id')->on('students');
-        //     $table->foreign('class_id')->references('id')->on('classes');
+        //     $table->foreign('school_class_id')->references('id')->on('classes');
         // });
     }
 

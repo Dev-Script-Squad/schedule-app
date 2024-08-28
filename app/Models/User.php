@@ -46,7 +46,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function userTypeRelated()
+    public function type()
     {
         return $this->hasOne(UserType::class, 'user_type_id');
     }

@@ -8,9 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class SchoolClass extends Model
 {
     use HasFactory;
-    protected $table = 'classes';
+    protected $table = 'school_classes';
     protected $primarykey = 'id';
     protected $fillable = [
         'name',
     ];
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'student_class')
+            ->withPivot('current')
+            ->withTimestamps();
+    }
+    public function currentStudents()
+    {
+        return $this->belongsToMany(Student::class, 'student_class')
+            ->wherePivot('current', true)
+            ->withTimestamps();
+    }
 }
