@@ -18,4 +18,11 @@ class Report extends Model
         'school_class_event_id',
         'student_id'
     ];
+
+    public function student()
+    {
+        return $this->belongsToMany(Student::class, 'student_class')
+            ->withTimestamps();
+    }
+
 }

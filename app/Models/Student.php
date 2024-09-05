@@ -36,4 +36,9 @@ class Student extends Model
             ->wherePivot('current', true)
             ->withTimestamps();
     }
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class, 'student_class')
+            ->withTimestamps();
+    }
 }

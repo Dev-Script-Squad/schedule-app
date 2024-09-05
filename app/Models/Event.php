@@ -20,9 +20,10 @@ class Event extends Model
         'student_id',
         'event_content_id'
     ];
-    // public function user()
-    // {
-    //     return $this->hasOne(User::class);
-    // }
+    public function schoolClasses()
+    {
+        return $this->belongsToMany(SchoolClass::class, 'school_class_id')
+            ->withTimestamps();
+    }
 
 }

@@ -26,4 +26,10 @@ class SchoolClass extends Model
             ->wherePivot('current', true)
             ->withTimestamps();
     }
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_id')
+            ->withTimestamps();
+    }
+
 }

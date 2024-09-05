@@ -19,4 +19,10 @@ class EventClass extends Model
         'time_end',
         'event_content_id'
     ];
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_id')
+            ->withTimestamps();
+    }
 }
