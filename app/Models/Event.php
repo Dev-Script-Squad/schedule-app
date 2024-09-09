@@ -25,5 +25,4 @@ class Event extends Model
         return $this->belongsToMany(SchoolClass::class, 'school_class_id')
             ->withTimestamps();
     }
-
 }

@@ -25,11 +25,37 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'role' => fake()->randomElement(['Diretor', 'Coordenador', 'Professor', 'Aluno', 'Responsável']),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
+    }
+
+    public function director()
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'Diretor'
+        ]);
+    }
+    public function coordinator()
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'Coordenador'
+        ]);
+    }
+    public function teacher()
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'Professor'
+        ]);
+    }
+    public function student()
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'Aluno'
+        ]);
     }
 
     /**
