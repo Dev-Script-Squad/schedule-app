@@ -57,6 +57,12 @@ class UserFactory extends Factory
             'role' => 'Aluno'
         ]);
     }
+    public function guardian()
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'Responsável'
+        ]);
+    }
 
     /**
      * Indicate that the model's email address should be unverified.

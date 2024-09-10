@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,7 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => User::factory()->teacher()->create(),
             'specialty' => fake()->randomElement(['Geografia', 'Matemática', 'Português', 'História', 'Física', 'Química', 'Biologia']),
             'educational_degree' => fake()->randomElement(['Mestre', 'Doutor', 'Especialista', 'Bacharel']),
         ];
