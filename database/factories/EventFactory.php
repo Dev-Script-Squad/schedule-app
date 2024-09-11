@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\SchoolClass;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,8 +21,8 @@ class EventFactory extends Factory
             'title' => fake()->randomElement(['Férias', 'Provas', 'Carnaval', 'Páscoa']),
             'type' => fake()->randomElement(['Férias', 'Provas', 'Carnaval', 'Páscoa']),
             'start' => fake()->dateTime($max = 'now', $timezone = null),
-            'end'=> fake()->dateTimeInInterval($startDate = 'now', $interval = '+ 5 days', $timezone = null),
-            // 'school_class_id',
+            'end' => fake()->dateTimeInInterval($startDate = 'now', $interval = '+ 5 days', $timezone = null),
+            'school_class_id' => SchoolClass::factory()->create(),
             // 'user_id',
             // 'student_id',
             // 'event_content_id'
