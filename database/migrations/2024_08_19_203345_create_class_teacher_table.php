@@ -16,11 +16,6 @@ return new class extends Migration {
             $table->unsignedInteger('teacher_id');
             $table->timestamps();
         });
-
-        // Schema::table('class_teacher', function (Blueprint $table) {
-            //     $table->foreign('school_class_id')->references('id')->on('classes');
-            //     $table->foreign('teacher_id')->references('id')->on('teachers');
-        // });
     }
 
     /**

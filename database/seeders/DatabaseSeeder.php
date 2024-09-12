@@ -17,23 +17,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        // User::factory(2)->create();
+        User::factory()->director()->count(1)->create();
+        User::factory()->coordinator()->count(2)->create();
 
-        // User::factory()->director()->count(1)->create();
-        // User::factory()->coordinator()->count(2)->create();
-        // User::factory()->teacher()->count(5)->create();
-        // User::factory()->student()->count(50)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Teacher::factory()->count(10)->create();
+        Student::factory()->count(50)->create();
 
 
-        // SchoolClass::factory(2)->create();
-        // Teacher::factory(2)->create();
-        // Student::factory(2)->create();
+        SchoolClass::factory(2)->create();
 
-        
+        SchoolClass::all()->each(function ($schoolClass) {
+            $students = Student::inRandomOrder()->take(rand(5, 15))->pluck('id');
+            $schoolClass->students()->attach($students);
+
+            $teachers = Teacher::inRandomOrder()->take(rand(1, 3))->pluck('id');
+            $schoolClass->teachers()->attach($teachers);
+        });
     }
 }

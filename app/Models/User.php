@@ -20,7 +20,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'user_type_id',
         'role',
     ];
 
@@ -46,11 +45,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function type()
-    {
-        return $this->hasOne(UserType::class, 'user_type_id');
-    }
-
     public function events()
     {
         return $this->belongsToMany(Event::class, 'event_id')

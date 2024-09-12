@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\UserType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,7 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $role = fake()->randomElement(['Diretor', 'Coordenador', 'Professor', 'Aluno', 'Responsável']);
+        $role = fake()->randomElement(['diretor', 'coordenador', 'professor', 'aluno', 'responsavel']);
 
         return [
             'name' => fake()->name(),
@@ -33,9 +32,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'user_type_id' => UserType::factory()->create([
-                'name' => $role,
-            ])->id,
         ];
     }
 
