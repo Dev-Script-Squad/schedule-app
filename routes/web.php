@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
 
 Route::prefix('users')->group(function() {
-    Route::get('/', [UserController::class, 'showUsers']);
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
     Route::get('/{id}',[UserController::class, 'showUniqueUser']);
 });
 

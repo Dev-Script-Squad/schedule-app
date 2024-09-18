@@ -7,12 +7,18 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function showUsers() 
+    public function index() 
     {
-        return dd(User::all());
+        $users = User::all();
+        return view('users', [
+            'users' => $users,
+        ]);
     }
-    public  function showUniqueUser($id) 
+    public function showUniqueUser($id) 
     {
-        return dd(User::find($id));
+        $user = User::find($id);
+        return view('users', [
+            'user' => $user,
+        ]);
     }
 }
