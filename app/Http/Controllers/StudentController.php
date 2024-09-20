@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
-class UserController extends Controller
+class StudentController extends Controller
 {
     public function index()
     {
@@ -20,17 +20,5 @@ class UserController extends Controller
         return view('users', [
             'user' => $user,
         ]);
-    }
-
-    public function createUser(Request $request)
-    {
-        $user = User::create([
-            'name' => 'Thiaguinho Bentinho',
-            'email' => 'thiago@a.com',
-            'password' => 'thiago',
-            'role' => 'Aluno'
-        ]);
-
-        return $user;
     }
 }

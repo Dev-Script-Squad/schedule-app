@@ -6,6 +6,8 @@
         <p>ID: {{ $user->id }}</p>
         <p>Nome: {{ $user->name }}</p>
         <p>Email: {{ $user->email }}</p>
+        <p>Senha: {{ $user->password }}</p>
+        <a href="{{ route('show.students') }}" class="return" >Voltar</a>
     @else
         <h1>Lista de Usuários</h1>
         <ul>

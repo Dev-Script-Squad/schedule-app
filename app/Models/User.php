@@ -50,4 +50,19 @@ class User extends Authenticatable
         return $this->belongsToMany(Event::class, 'event_id')
             ->withTimestamps();
     }
+
+    public function isDirector()
+    {
+        return $this->role === 'diretor';
+    }
+
+    public function isProfessor()
+    {
+        return $this->role === 'professor';
+    }
+
+    public function isAluno()
+    {
+        return $this->role === 'aluno';
+    }
 }
