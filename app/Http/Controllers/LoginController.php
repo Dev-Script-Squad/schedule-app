@@ -20,7 +20,7 @@ class LoginController extends Controller
             $user = Auth::user();
 
             if ($user->role === 'Diretor') {
-                return redirect('/showStudents');
+                return redirect('/users');
             } elseif ($user->role === 'Professor') {
                 return 'Olá professor!';
             } elseif ($user->role === 'Aluno') {
