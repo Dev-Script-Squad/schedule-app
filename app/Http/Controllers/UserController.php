@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 // use Illuminate\Support\Facades\Request;
@@ -14,12 +14,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users', compact('users'));
+        return view('director.users', compact('users'));
     }
     public function show($id)
     {
         $user = User::find($id);
-        return view('users', [
+        return view('director.users', [
             'user' => $user,
         ]);
     }
@@ -38,7 +38,7 @@ class UserController extends Controller
         return Redirect::route('user.index');
     }
 
-    public function update(HttpRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',

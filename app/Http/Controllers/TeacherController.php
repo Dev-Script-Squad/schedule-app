@@ -10,6 +10,6 @@ class TeacherController extends Controller
     public function index() 
     {
         $users = User::where('role', 'Professor')->get();
-        return view('teachers', compact('users'));
+        return view('director.teachers', compact('users'));
     }
 }

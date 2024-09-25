@@ -10,7 +10,7 @@ class DirectorController extends Controller
     public function showAllStudents() 
     {
         $users = User::where('role', 'Aluno')->get();
-        return view('students', compact('users'));
+        return view('director.students', compact('users'));
     }
 
     
