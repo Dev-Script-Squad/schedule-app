@@ -9,9 +9,9 @@ class DirectorController extends Controller
 {
     public function showAllStudents() 
     {
-        $students = User::where('role', 'Aluno')->get();
-        return view('students', [
-            'users' => $students,
-        ]);
+        $users = User::where('role', 'Aluno')->get();
+        return view('students', compact('users'));
     }
+
+    
 }

@@ -1,45 +1,65 @@
-<script>
-  export default {
-    
-  }
-</script>
 <template>
   <div class="container">
-    <div class="left-image">
-      <img src="../../../public/leftImage.svg"
-        alt="Aluna na sala de aula levantando a mão para tirar uma dúvida com seu professor">
-    </div>
-    <div class="login">
-      <div class="header-login">
-        <img src="../../../public/smile.svg" alt="Emoji Sorridente azul">
-        <h2>Bem vindo</h2>
-      </div>
-      <div class="form-login">
-        <div class="inputs-login">
-          <input type="text" class="text" placeholder="Email">
-          <input type="password" class="text" placeholder="Senha">
-        </div>
-        <div class="buttons-login">
-          <a href="esqueciasenha.com"></a>
-          <button class="submit">Entrar</button>
-        </div>
-      </div>
+    <div class="form-login">
+      <form :action="loginUrl" method="post">
+        <input type="hidden" name="_token" :value="csrfToken">
+        <input type="email" name="email" class="text" placeholder="Email" v-model="email">
+        <input type="password" name="password" class="text" placeholder="Senha" v-model="password">
+        <button class="submit">Entrar</button>
+      </form>
+      <a href="esqueciasenha.com">Esqueci a senha</a>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    loginUrl: {
+      type: String,
+      required: true
+    },
+    csrfToken: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      email: '',
+      password: ''
+    };
+  }
+};
+</script>
+
 <style scoped>
 .container {
   display: flex;
-  padding: .5rem;
-  /* justify-content: space-between; */
+  padding: 0.5rem;
 }
 
-.leftImage {
+.form-login {
+  flex-direction: column;
+}
+
+.text {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
   width: 100%;
-  height: auto;
+  max-width: 400px;
+  box-sizing: border-box;
 }
 
-.login {
+.submit {
+  padding: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
 
+a {
+  margin-top: 1rem;
+  color: blue;
+  text-decoration: underline;
 }
 </style>

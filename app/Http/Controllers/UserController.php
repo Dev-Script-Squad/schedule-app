@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+// use Illuminate\Support\Facades\Request;
 
 class UserController extends Controller
 {
     public function index()
     {
         $users = User::all();
-        return view('users', [
-            'users' => $users,
-        ]);
+        return view('users', compact('users'));
     }
-    public function showUniqueUser($id)
+    public function show($id)
     {
         $user = User::find($id);
         return view('users', [
@@ -24,7 +24,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function createUser(UserRequest $request)
+    public function store(UserRequest $request)
     {
         $user = $request->validated();
 
@@ -38,9 +38,13 @@ class UserController extends Controller
         return Redirect::route('user.index');
     }
 
-    public function updateUser(UserRequest $request, $id)
+    public function update(HttpRequest $request, $id)
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:users,email,' . $id,
+            'password' => 'nullable|min:6',
+        ]);
         $user = User::findOrFail($id);
 
         $user->name = $data['name'];
@@ -53,7 +57,7 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with('success', 'Usuário atualizado com sucesso!');
     }
-    public function removeUser($id)
+    public function remove($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
