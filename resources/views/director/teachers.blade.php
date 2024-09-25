@@ -6,6 +6,6 @@
             <x-logged-user />
           </div>
           <h1>Lista de Professores</h1>
-          <x-users-table :users="$users" role="Professor" />
+          <x-users-table :users="$users" />
     </div>
 @endsection

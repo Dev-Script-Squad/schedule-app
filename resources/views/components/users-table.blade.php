@@ -13,30 +13,26 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                    @if (!isset($role) || (isset($role) && $user->role === $role))
-                        <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                <a href="{{ route('user.show', $user->id) }}">Ver Detalhes</a>
-                            </td>
-                        </tr>
-                    @endif
+                    <tr>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>
+                            <a href="{{ route('user.show', $user->id) }}">Ver Detalhes</a>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 @endif
 <style scoped>
-    /* Container para toda a página */
     .container {
         padding: 20px;
         margin: 0 auto;
         max-width: 1000px;
     }
 
-    /* Tabela com responsividade */
     .table-responsive {
         width: 100%;
         overflow-x: auto;
@@ -60,7 +56,6 @@
         font-weight: bold;
     }
 
-    /* Estilo dos links e botões */
     a {
         color: #3490dc;
         text-decoration: none;
@@ -83,7 +78,6 @@
         background-color: #c0392b;
     }
 
-    /* Responsividade */
     @media (max-width: 768px) {
 
         th,
