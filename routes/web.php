@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DirectorController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
     Route::post('/create-user', [UserController::class, 'store'])->name('user.store');
     Route::patch('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/delete-user/{id}', [UserController::class, 'remove'])->name('user.remove');
+    Route::post('/create-student', [StudentController::class, 'store'])->name('student.store');
     Route::get('/students', [DirectorController::class, 'showAllStudents'])->name('student.index');
     Route::get('/teachers', [TeacherController::class, 'index'])->name('teacher.index');
 });
