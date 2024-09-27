@@ -17,13 +17,7 @@
 
             <div class="user-edit">
                 <h3>Editar Usuário</h3>
-                @if ($errors->any())
-                    <ul class="error-list">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                @endif
+                <x-validation-error />
                 <form action="{{ route('user.update', $user->id) }}" method="POST">
                     @method('PATCH')
                     @csrf
@@ -41,6 +35,7 @@
             </div>
 
             <hr>
+
             <div class="user-delete">
                 <h3>Deletar Usuário</h3>
                 <form action="{{ route('user.remove', $user->id) }}" method="POST"
@@ -54,22 +49,15 @@
             <a href="{{ route('user.index') }}" class="btn btn-secondary">Voltar</a>
         @else
             <div class="user-info">
-               <x-logged-user />
+                <x-logged-user />
             </div>
-            <h1>Lista de Usuários</h1>
-            <x-users-table :users="$users" />
+            <x-users-table :users="$users" title="Lista de Usuários"/>
 
             <hr>
 
             <div class="user-create">
                 <h3>Criar Novo Usuário</h3>
-                @if ($errors->any())
-                    <ul class="error-list">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                @endif
+                <x-validation-error />
                 <form action="{{ route('user.store') }}" method="POST">
                     @csrf
                     <label for="name">Nome:</label>

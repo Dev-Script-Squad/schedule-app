@@ -12,28 +12,22 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return view('users', [
-            'users' => $users,
-        ]);
+        $users = User::where('role', 'Aluno')->get();
+        $title = 'Lista de Alunos';
+        return view('director.students', compact('users', 'title'));
     }
-    public function showUniqueUser($id)
+
+    public function show(User $student)
     {
-        $user = User::find($id);
+
         return view('users', [
-            'user' => $user,
+            'user' => $student,
         ]);
     }
 
     public function store(StudentRequest $request)
     {
         $student = $request->validated();
-
-        if(!$student) {
-            return back()->withErrors([
-                'Preencha todos os campos corretamente!'
-            ]);
-        };
 
         User::create($student);
 

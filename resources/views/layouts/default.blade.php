@@ -6,107 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <div class="sidebar">
-        <div class="sidebar-header">
+<body class="bg-amber-900">
+    <div class="backdrop-blur-md w-64 h-auto rounded-2xl mt-12 ml-12 fixed bg-neutral-400/50 text-white p-5 shadow-lg transition-all duration-300 ease-in-out z-10">
+        <div class="p-3 text-2xl text-center border-b border-white/50">
             <h2>Menu</h2>
         </div>
-        <ul class="sidebar-nav">
-            <li><a href="/calendar">Calendário</a></li>
-            <li><a href="/students">Alunos</a></li>
-            <li><a href="/teachers">Professores</a></li>
-            <li><a href="/school-classes">Turmas</a></li>
-            <li><a href="/users">Usuários</a></li>
-          </ul>
+        <ul class="sidebar-nav list-none mt-5 flex flex-col justify-center">
+            <li class="my-3">
+                <a href="/calendar"
+                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">Calendário</a>
+            </li>
+            <li class="my-3">
+                <a href="/students" class="flex items-center text-white no-underline text-lg p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">
+                    <img class="w-6 h-6 mr-3" alt="Ícone de Alunos" src="{{ asset('images/diplomadosvg.svg') }}">
+                    Alunos
+                </a>
+            </li>
+            <li class="my-3">
+                <a href="/teachers"
+                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">Professores</a>
+            </li>
+            <li class="my-3">
+                <a href="/school-classes"
+                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">Turmas</a>
+            </li>
+            <li class="my-3">
+                <a href="/users"
+                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">Usuários</a>
+            </li>
+        </ul>
     </div>
 
-    <div class="main-content">
+    <div class="main-content ml-72 p-5 transition-margin duration-300  ease-in-out min-h-screen">
         @yield('content')
     </div>
 
+    <style>
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0; 
+                padding-left: 2rem; 
+                padding-right: 2rem; 
+            }
+            .backdrop-blur-md {
+                position: relative;
+                margin: 0;
+                width: 100%;
+            }
+        }
+    </style>
 </body>
 
 </html>
-
-<style scoped>
-    .sidebar {
-        height: 100vh;
-        width: 250px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: #2c3e50;
-        color: white;
-        padding: 20px;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        transition: width 0.3s ease;
-    }
-
-    .sidebar-header {
-        padding: 10px;
-        font-size: 1.5rem;
-        text-align: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .sidebar-nav {
-        list-style-type: none;
-        padding: 0;
-        margin-top: 20px;
-    }
-
-    .sidebar-nav li {
-        margin: 15px 0;
-    }
-
-    .sidebar-nav a {
-        color: white;
-        text-decoration: none;
-        font-size: 1.1rem;
-        padding: 10px 15px;
-        display: block;
-        transition: background-color 0.3s ease;
-        border-radius: 4px;
-    }
-
-    .sidebar-nav a:hover {
-        background-color: #34495e;
-    }
-
-    .main-content {
-        margin-left: 250px;
-        padding: 20px;
-        transition: margin-left 0.3s ease;
-    }
-
-    @media (max-width: 768px) {
-        .sidebar {
-            width: 100px;
-        }
-
-        .main-content {
-            margin-left: 100px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .sidebar {
-            width: 60px;
-        }
-
-        .sidebar-header {
-            font-size: 1rem;
-        }
-
-        .sidebar-nav a {
-            font-size: 0.9rem;
-            padding: 5px 10px;
-        }
-
-        .main-content {
-            margin-left: 60px;
-        }
-    }
-</style>

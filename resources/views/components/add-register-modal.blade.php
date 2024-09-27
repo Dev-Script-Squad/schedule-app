@@ -7,6 +7,7 @@
       <h2 class="text-xl mb-4">Adicionar Aluno</h2>
       <form action="{{ route('student.store') }}" method="POST">
           @csrf
+          <x-validation-error />
           <label for="name" class="block text-gray-700">Nome:</label>
           <input type="text" name="name" class="border rounded w-full mb-4 p-2" required>
 
