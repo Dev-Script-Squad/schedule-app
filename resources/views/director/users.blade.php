@@ -51,7 +51,7 @@
             <div class="user-info">
                 <x-logged-user />
             </div>
-            <x-users-table :users="$users" title="Lista de Usuários"/>
+            <x-tables :users="$users" title="Lista de Usuários"/>
 
             <hr>
 

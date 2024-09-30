@@ -8,6 +8,6 @@
         {{-- <div class="flex justify-center items-center mb-6">
             <x-add-register-modal class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
         </div> --}}
-        <x-users-table :users="$users" title="Lista de Alunos"/>
+        <x-tables :users="$users" title="Lista de Alunos"/>
     </div>
 @endsection

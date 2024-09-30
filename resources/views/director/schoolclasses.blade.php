@@ -60,7 +60,7 @@
             {{-- <div class="user-info mb-4">
                     <x-logged-user />
                 </div> --}}
-            <x-users-table :schoolclasses="$schoolclasses" title="Turmas" />
+            <x-tables :schoolclasses="$schoolclasses" title="Turmas" />
         @endif
     </div>
 @endsection
