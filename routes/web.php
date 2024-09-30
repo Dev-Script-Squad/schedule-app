@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DirectorController;
+use App\Http\Controllers\SchoolClassController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Models\User;
@@ -43,6 +44,14 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
         Route::patch('/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('/{id}', [UserController::class, 'remove'])->name('user.remove');
     });
+    Route::prefix('school-classes')->group(function () {
+        Route::get('/', [SchoolClassController::class, 'index'])->name('schoolclass.index');
+        Route::post('/', [SchoolClassController::class, 'store'])->name('schoolclass.store');
+        Route::get('/{schoolclass}', [SchoolClassController::class, 'show'])->name('schoolclass.show');
+        Route::delete('/{schoolclass}', [SchoolClassController::class, 'remove'])->name('schoolclass.remove');
+    });
+
+
     Route::post('/create-student', [StudentController::class, 'store'])->name('student.store');
     Route::get('/students', [StudentController::class, 'index'])->name('student.index');
     Route::get('/teachers', [TeacherController::class, 'index'])->name('teacher.index');

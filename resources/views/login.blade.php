@@ -2,19 +2,9 @@
 
 @section('content')
     <script src="https://cdn.tailwindcss.com"></script>
-
-    @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Erro!</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <div class="flex justify-center items-center h-screen">
-        <div class="w-full max-w-sm">
+    <x-validation-error />
+    <div class="flex flex-col lg:flex-row justify-center items-center h-screen p-4 lg:p-0">
+        <div class="w-full max-w-sm mb-1 lg:mb-0">
             <img class="" src="{{ asset('images/leftImage.svg') }}" alt="">
         </div>
         <div class="w-full max-w-sm">
