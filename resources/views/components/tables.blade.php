@@ -5,65 +5,39 @@
         <div class="mb-4">
             <p class="font-bold text-3xl text-center">{{ $title }}</p>
         </div>
+
+        <!-- Exibindo usuários em cards, um por linha -->
         @if (!empty($users))
-            <div class="mt-6">
-                <div class="table-responsive">
-                    <table class="min-w-full table-auto border-collapse">
-                        <thead class="bg-gray-200 sticky top-0">
-                            <tr>
-                                <th class="p-4 text-left">ID</th>
-                                <th class="p-4 text-left">Nome</th>
-                                <th class="p-4 text-left">Email</th>
-                                <th class="p-4 text-left">Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
-                                <tr class="border-b">
-                                    <td class="p-4">{{ $user->id }}</td>
-                                    <td class="p-4">{{ $user->name }}</td>
-                                    <td class="p-4">{{ $user->email }}</td>
-                                    <td class="p-4">
-                                        <a class="text-blue-500 hover:underline"
-                                            href="{{ route('user.show', $user->id) }}">
-                                            Ver Detalhes
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        <div class="grid grid-cols-1 gap-6 mt-6">
+            @foreach ($users as $user)
+            <a href="{{ route('user.show', $user->id) }}" class="bg-white rounded-lg shadow-md p-5 flex justify-between items-center hover:bg-gray-100 transition duration-300">
+                <div class="flex items-center w-full">
+                    <!-- Espaço para a foto do usuário -->
+                    <img src="{{ asset('images/kaio.jpg') }}" alt="Foto do Usuário" class="w-12 h-12 rounded-full mr-4">
+
+                    <!-- Nome e email lado a lado, com o email sempre alinhado -->
+                    <div class="flex items-center w-full">
+                        <!-- Nome com largura fixa -->
+                        <p class="font-semibold text-lg w-1/3 truncate">{{ $user->name }}</p>
+
+                        <!-- Email alinhado sempre à direita -->
+                        <p class="text-gray-700 text-center w-2/3">{{ $user->email }}</p>
+                    </div>
                 </div>
-            </div>
+            </a>
+            @endforeach
+        </div>
         @endif
+
+        <!-- Exibindo turmas em cards -->
         @if (!empty($schoolclasses))
-            <div class="mt-6">
-                <div class="table-responsive">
-                    <table class="min-w-full table-auto border-collapse">
-                        <thead class="bg-gray-200 sticky top-0">
-                            <tr>
-                                <th class="p-4 text-left">ID</th>
-                                <th class="p-4 text-left">Nome da Turma</th>
-                                <th class="p-4 text-left">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($schoolclasses as $schoolclass)
-                                <tr class="border-b">
-                                    <td class="p-4">{{ $schoolclass->id }}</td>
-                                    <td class="p-4">{{ $schoolclass->name }}</td>
-                                    <td class="p-4">
-                                        <a class="text-blue-500 hover:underline"
-                                            href="{{ route('schoolclass.show', $schoolclass->id) }}">
-                                            Ver Turma
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+            @foreach ($schoolclasses as $schoolclass)
+            <a href="{{ route('schoolclass.show', $schoolclass->id) }}" class="bg-white rounded-lg shadow-md p-5 hover:bg-gray-100 transition duration-300 block">
+                <p class="text-gray-700 mb-2">{{ $schoolclass->name }}</p>
+            </a>
+            @endforeach
+        </div>
         @endif
     </div>
 </div>
