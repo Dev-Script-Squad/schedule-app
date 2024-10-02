@@ -17,11 +17,6 @@ return new class extends Migration {
             $table->boolean('current')->default(false);
             $table->timestamps();
         });
-
-        // Schema::table('student_class', function (Blueprint $table) {
-        //     $table->foreign('student_id')->references('id')->on('students');
-        //     $table->foreign('school_class_id')->references('id')->on('classes');
-        // });
     }
 
     /**

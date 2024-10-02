@@ -17,16 +17,16 @@ class Student extends Model
     ];
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function guardianUser()
     {
-        return $this->hasOne(User::class, 'guardian_user_id');
+        return $this->belongsTo(User::class, 'guardian_user_id');
     }
     public function classes()
     {
-        return $this->belongsToMany(SchoolClass::class, 'student_class')
+        return $this->belongsToMany(SchoolClass::class, 'student_class', 'student_id', 'school_class_id')
             ->withPivot('current')
             ->withTimestamps();
     }

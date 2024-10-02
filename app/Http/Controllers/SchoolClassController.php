@@ -11,24 +11,37 @@ class SchoolClassController extends Controller
     public function index()
     {
         $schoolclasses = SchoolClass::all();
-
-        // $students = $schoolclasses->current;
-
-        // dd($students);
         return view('director.schoolclasses', compact('schoolclasses'));
     }
-    
+
     public function indexStudents()
     {
         $schoolclasses = SchoolClass::all();
         return view('director.schoolclasses', compact('schoolclasses'));
     }
     public function show(SchoolClass $schoolclass)
-    {    
-        // dd($schoolclass->students);
+    {
+        $students = $schoolclass->students()
+            ->with('user', 'guardianUser')
+            ->join('users', 'students.user_id', '=', 'users.id')
+            ->orderBy('users.name', 'asc')
+            ->select('students.*')
+            ->get();
+        $studentCount = $students->count();
+
+        $teachers = $schoolclass->teachers()
+            ->join('users', 'teachers.user_id', '=', 'users.id')
+            ->orderBy('users.name', 'asc')
+            ->select('teachers.*')
+            ->get();
+        $teacherCount = $teachers->count();
+
         return view('director.schoolclasses', [
             'schoolclass' => $schoolclass,
-            'students' => $schoolclass->students,
+            'students' => $students,
+            'teachers' => $teachers,
+            'studentCount' => $studentCount,
+            'teacherCount' => $teacherCount,
         ]);
     }
 
@@ -39,6 +52,7 @@ class SchoolClassController extends Controller
 
         return Redirect::route('schoolclass.index');
     }
+    
     public function remove(SchoolClass $schoolclass)
     {
         $schoolclass->delete();
