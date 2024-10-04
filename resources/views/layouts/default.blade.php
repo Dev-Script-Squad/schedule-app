@@ -17,39 +17,39 @@
         <ul class="sidebar-nav list-none mt-5 flex flex-col justify-center">
             <li class="my-3">
                 <a href="/calendar"
-                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">Calendário</a>
+                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700 {{ request()->is('calendar') ? 'bg-gray-400' : '' }}">Calendário</a>
             </li>
             <li class="my-3">
-                <a href="/students" class="flex items-center text-white no-underline text-lg p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">
+                <a href="/students" class="flex items-center text-white no-underline text-lg p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700 {{ request()->is('students') ? 'bg-gray-400' : '' }}">
                     <img class="w-6 h-6 mr-3" alt="Ícone de Alunos" src="{{ asset('images/diplomadosvg.svg') }}">
                     Alunos
                 </a>
             </li>
             <li class="my-3">
                 <a href="/teachers"
-                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">Professores</a>
+                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700 {{ request()->is('teachers') ? 'bg-gray-400' : '' }}">Professores</a>
             </li>
             <li class="my-3">
                 <a href="/school-classes"
-                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">Turmas</a>
+                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700 {{ request()->is('school-classes') ? 'bg-gray-400' : '' }}">Turmas</a>
             </li>
             <li class="my-3">
                 <a href="/users"
-                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">Usuários</a>
+                   class="text-white no-underline text-lg block p-3 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700 {{ request()->is('users') ? 'bg-gray-400' : '' }}">Usuários</a>
             </li>
         </ul>
     </div>
 
-    <div class="main-content ml-72 p-5 transition-margin duration-300  ease-in-out min-h-screen">
+    <div class="main-content ml-72 p-5 transition-margin duration-300 ease-in-out min-h-screen">
         @yield('content')
     </div>
 
     <style>
         @media (max-width: 768px) {
             .main-content {
-                margin-left: 0; 
-                padding-left: 2rem; 
-                padding-right: 2rem; 
+                margin-left: 0;
+                padding-left: 2rem;
+                padding-right: 2rem;
             }
             .backdrop-blur-md {
                 position: relative;
