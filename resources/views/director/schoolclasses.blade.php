@@ -85,7 +85,8 @@
                                 <div id="teacher-{{ $teacher->id }}" class="hidden">
                                     <p class="text-gray-700"><strong>Email:</strong> {{ $teacher->user->email }}</p>
                                     <p class="text-gray-700"><strong>Especialidade:</strong> {{ $teacher->specialty }}</p>
-                                    <p class="text-gray-700"><strong>Título:</strong> {{ $teacher->educational_degree }}</p>
+                                    <p class="text-gray-700"><strong>Título:</strong> {{ $teacher->educational_degree }}
+                                    </p>
                                 </div>
                             </div>
                         @endforeach
@@ -94,7 +95,10 @@
             </div>
             <hr class="my-4">
 
-            <div class="flex justify-end">
+            <div class="flex justify-between">
+                <div class="add-students">
+                    <x-add-students-in-schoolclasses :schoolclass="$schoolclass" :availableStudents="$availableStudents" />
+                </div>
                 <div class="schoolclass-delete">
                     <form action="{{ route('schoolclass.remove', $schoolclass->id) }}" method="POST"
                         onsubmit="return confirm('Tem certeza que deseja deletar?');">

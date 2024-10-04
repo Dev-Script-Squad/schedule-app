@@ -26,12 +26,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/', [LoginController::class, 'logout'])->name('user.logout');
 });
 
-
-
-
-
-
-
 // Rotas de admin (Diretor/Coordenador)
 
 Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
@@ -49,8 +43,11 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
         Route::post('/', [SchoolClassController::class, 'store'])->name('schoolclass.store');
         Route::get('/{schoolclass}', [SchoolClassController::class, 'show'])->name('schoolclass.show');
         Route::delete('/{schoolclass}', [SchoolClassController::class, 'remove'])->name('schoolclass.remove');
+        Route::post('/{schoolclass}/add-students', [SchoolClassController::class, 'addStudents'])
+            ->name('schoolclass.addStudents');
+        Route::post('/{schoolclass}/remove-students', [SchoolClassController::class, 'removeStudents'])
+            ->name('schoolclass.removeStudents');
     });
-
 
     Route::post('/create-student', [StudentController::class, 'store'])->name('student.store');
     Route::get('/students', [StudentController::class, 'index'])->name('student.index');
