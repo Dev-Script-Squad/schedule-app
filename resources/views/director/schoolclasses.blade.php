@@ -4,11 +4,15 @@
     <div class="container mx-auto px-4 py-6 min-h-screen">
         @if (isset($schoolclass))
             <div class="schoolclass-info flex justify-between mb-4">
-                <a href="{{ route('schoolclass.index') }}"
-                    class="inline-block mt-4 bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition">
-                    Voltar
-                </a>
-                <x-logged-user />
+                <div>
+                    <a href="{{ route('schoolclass.index') }}"
+                        class="inline-block mt-4 bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition">
+                        Voltar
+                    </a>
+                </div>
+                <div>
+                    <x-logged-user />
+                </div>
             </div>
 
             <div class="schoolclass-details mb-6 bg-white shadow-lg rounded-lg p-6 border border-gray-200">
@@ -48,23 +52,39 @@
                         @foreach ($students as $student)
                             <div class="border rounded-lg mb-2 p-3 bg-gray-100 cursor-pointer hover:bg-gray-200 transition"
                                 onclick="toggleDetails('student-{{ $student->id }}')">
-                                <div class="flex">
-                                    <p class="text-gray-700">
+                                <div class="flex justify-between">
+                                    <div class="flex">
                                         <img class="w-6 h-6 mr-3" alt="Ícone de Alunos"
                                             src="{{ asset('images/diplomadosvg.svg') }}">
-                                    </p>
-                                    {{-- <p class="text-gray-700"><strong>ID:</strong> {{ $student->id }}</p> --}}
-                                    <p class="text-gray-700"> {{ $student->user->name }}</p>
+                                        <p class="text-gray-700">
+                                            {{ $student->user->name ?? 'Usuário não cadastrado' }}
+                                        </p>
+                                    </div>
+                                    <form
+                                        action="{{ route('schoolclass.removeStudents', ['schoolclass' => $schoolclass->id, 'student' => $student->id]) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Tem certeza que deseja remover este aluno da turma?');">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit"
+                                            class="bg-red-400 text-white rounded-full px-1 py-1 text-sm hover:bg-red-600 transition-all flex items-center justify-center shadow-md hover:shadow-lg transform hover:scale-105">
+                                            <img class="w-5 h-5" alt="Ícone de desvincular"
+                                                src="{{ asset('images/desvincular.svg') }}">
+                                        </button>
+
+                                    </form>
                                 </div>
                                 <div id="student-{{ $student->id }}" class="hidden">
-                                    <p class="text-gray-700"><strong>Email:</strong> {{ $student->user->email }}</p>
+                                    <p class="text-gray-700"><strong>Email:</strong>
+                                        {{ $student->user->email ?? 'Email não disponível' }}</p>
                                     <p class="text-gray-700"><strong>Responsável:</strong>
-                                        {{ $student->guardianUser->name }}</p>
+                                        {{ $student->guardianUser->name ?? 'Responsável não cadastrado' }}</p>
                                 </div>
                             </div>
                         @endforeach
                     @endif
                 </div>
+
 
                 <div class="schoolclass-teachers w-1/2 bg-white shadow-md rounded-lg p-4">
                     <h2 class="text-2xl font-bold mb-2">Professores da turma</h2>
@@ -74,18 +94,37 @@
                         @foreach ($teachers as $teacher)
                             <div class="border rounded-lg mb-2 p-3 bg-gray-100 cursor-pointer hover:bg-gray-200 transition"
                                 onclick="toggleDetails('teacher-{{ $teacher->id }}')">
-                                <div class="flex">
-                                    {{-- <p class="text-gray-700"><strong>ID:</strong> {{ $teacher->id }}</p> --}}
-                                    <p class="text-gray-700">
-                                        <img class="w-6 h-6 mr-3" alt="Ícone de Alunos"
-                                            src="{{ asset('images/teacher.svg') }}">
-                                    </p>
-                                    <p class="text-gray-700">{{ $teacher->user->name }}</p>
+                                <div class="flex justify-between">
+                                    <div class="flex">
+                                        <p class="text-gray-700">
+                                            <img class="w-6 h-6 mr-3" alt="Ícone de Alunos"
+                                                src="{{ asset('images/teacher.svg') }}">
+                                        </p>
+                                        <p class="text-gray-700">{{ $teacher->user->name }}</p>
+                                    </div>
+
+                                    <form
+                                        action="{{ route('schoolclass.removeTeachers', ['schoolclass' => $schoolclass->id, 'teacher' => $teacher->id]) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Tem certeza que deseja remover este professor da turma?');">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit"
+                                            class="bg-red-400 text-white rounded-full px-1 py-1 text-sm hover:bg-red-600 transition-all flex items-center justify-center shadow-md hover:shadow-lg transform hover:scale-105">
+                                            <img class="w-5 h-5" alt="Ícone de desvincular"
+                                                src="{{ asset('images/desvincular.svg') }}">
+                                        </button>
+                                    </form>
                                 </div>
                                 <div id="teacher-{{ $teacher->id }}" class="hidden">
-                                    <p class="text-gray-700"><strong>Email:</strong> {{ $teacher->user->email }}</p>
-                                    <p class="text-gray-700"><strong>Especialidade:</strong> {{ $teacher->specialty }}</p>
-                                    <p class="text-gray-700"><strong>Título:</strong> {{ $teacher->educational_degree }}
+                                    <p class="text-gray-700"><strong>Email:</strong>
+                                        {{ $teacher->user->email ?? 'Email não informado' }}
+                                    </p>
+                                    <p class="text-gray-700"><strong>Especialidade:</strong>
+                                        {{ $teacher->specialty ?? 'Especialidade não informada' }}
+                                    </p>
+                                    <p class="text-gray-700"><strong>Título:</strong>
+                                        {{ $teacher->educational_degree ?? 'Grau educacional não informado' }}
                                     </p>
                                 </div>
                             </div>
@@ -98,6 +137,9 @@
             <div class="flex justify-between">
                 <div class="add-students">
                     <x-add-students-in-schoolclasses :schoolclass="$schoolclass" :availableStudents="$availableStudents" />
+                </div>
+                <div class="add-teachers">
+                    <x-add-teachers-in-schoolclasses :schoolclass="$schoolclass" :availableTeachers="$availableTeachers" />
                 </div>
                 <div class="schoolclass-delete">
                     <form action="{{ route('schoolclass.remove', $schoolclass->id) }}" method="POST"

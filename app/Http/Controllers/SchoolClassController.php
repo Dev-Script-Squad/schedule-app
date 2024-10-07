@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SchoolClassRequest;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\SchoolClass;
 use App\Models\Student;
@@ -44,13 +45,18 @@ class SchoolClassController extends Controller
             $query->where('school_class_id', $schoolclass->id);
         })->get();
 
+        $availableTeachers = Teacher::whereDoesntHave('classes', function ($query) use ($schoolclass) {
+            $query->where('school_class_id', $schoolclass->id);
+        })->get();
+
         return view('director.schoolclasses', [
             'schoolclass' => $schoolclass,
             'students' => $students,
             'teachers' => $teachers,
             'studentCount' => $studentCount,
             'teacherCount' => $teacherCount,
-            'availableStudents' => $availableStudents
+            'availableStudents' => $availableStudents,
+            'availableTeachers' => $availableTeachers
         ]);
     }
 
@@ -66,19 +72,36 @@ class SchoolClassController extends Controller
         return redirect()->route('schoolclass.show', $schoolclass->id)
             ->with('success', 'Alunos adicionados com sucesso à turma.');
     }
-    public function removeStudents(Request $request, SchoolClass $schoolclass)
+
+    public function removeStudents(SchoolClass $schoolclass, Student $student)
+    {
+        $schoolclass->students()->detach($student->id);
+
+        return redirect()->route('schoolclass.show', $schoolclass->id)
+            ->with('success', 'Aluno removido com sucesso da turma.');
+    }
+
+    public function addTeachers(Request $request, SchoolClass $schoolclass)
     {
         $validatedData = $request->validate([
-            'students' => 'required|array',
-            'students.*' => 'exists:students,id',
+            'teachers' => 'required|array',
+            'teachers.*' => 'exists:teachers,id',
         ]);
-    
-        $schoolclass->students()->detach($validatedData['students']);
-    
+
+        $schoolclass->teachers()->attach($validatedData['teachers']);
+
         return redirect()->route('schoolclass.show', $schoolclass->id)
-            ->with('success', 'Alunos removidos com sucesso da turma.');
+            ->with('success', 'Professores adicionados com sucesso à turma.');
     }
-    
+
+    public function removeTeachers(SchoolClass $schoolclass, Teacher $teacher)
+    {
+        $schoolclass->teachers()->detach($teacher->id);
+
+        return redirect()->route('schoolclass.show', $schoolclass->id)
+            ->with('success', 'Professor removido com sucesso da turma.');
+    }
+
 
 
     public function store(SchoolClassRequest $request)

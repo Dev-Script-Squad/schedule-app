@@ -43,10 +43,17 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
         Route::post('/', [SchoolClassController::class, 'store'])->name('schoolclass.store');
         Route::get('/{schoolclass}', [SchoolClassController::class, 'show'])->name('schoolclass.show');
         Route::delete('/{schoolclass}', [SchoolClassController::class, 'remove'])->name('schoolclass.remove');
+        
         Route::post('/{schoolclass}/add-students', [SchoolClassController::class, 'addStudents'])
             ->name('schoolclass.addStudents');
-        Route::post('/{schoolclass}/remove-students', [SchoolClassController::class, 'removeStudents'])
+        Route::delete('/{schoolclass}/remove-students/{student}', [SchoolClassController::class, 'removeStudents'])
             ->name('schoolclass.removeStudents');
+
+        Route::post('/{schoolclass}/add-teachers', [SchoolClassController::class, 'addTeachers'])
+            ->name('schoolclass.addTeachers');
+        Route::delete('/{schoolclass}/remove-teachers/{teacher}', [SchoolClassController::class, 'removeTeachers'])
+            ->name('schoolclass.removeTeachers');
+
     });
 
     Route::post('/create-student', [StudentController::class, 'store'])->name('student.store');
