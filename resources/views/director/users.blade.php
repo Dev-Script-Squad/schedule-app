@@ -40,9 +40,14 @@
                         <input type="password" name="password" placeholder="Nova Senha"
                             class="w-full p-2 border border-gray-300 rounded mb-4">
 
+                        <label for="password_confirmation" class="block">Confirme a Senha:</label>
+                        <input type="password" name="password_confirmation" placeholder="Confirme a Nova Senha"
+                            class="w-full p-2 border border-gray-300 rounded mb-4">
+
                         <button type="submit" class="bg-blue-500 text-white rounded px-4 py-2">Atualizar Usuário</button>
                     </form>
                 </div>
+
             </div>
 
             <hr class="my-4">
@@ -78,19 +83,23 @@
                         @csrf
                         <x-validation-error />
                         <label for="name" class="block mb-1">Nome:</label>
-                        <input type="text" name="name" placeholder="Nome"
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Nome"
                             class="w-full p-2 border border-gray-300 rounded mb-4" required>
 
                         <label for="email" class="block mb-1">Email:</label>
-                        <input type="email" name="email" placeholder="Email"
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email"
                             class="w-full p-2 border border-gray-300 rounded mb-4" required>
 
                         <label for="password" class="block mb-1">Senha:</label>
                         <input type="password" name="password" placeholder="Senha"
                             class="w-full p-2 border border-gray-300 rounded mb-4" required>
 
+                        <label for="password_confirmation" class="block mb-1">Confirme a Senha:</label>
+                        <input type="password" name="password_confirmation" placeholder="Confirme a Senha"
+                            class="w-full p-2 border border-gray-300 rounded mb-4" required>
+
                         <label for="role" class="block mb-1">Função:</label>
-                        <input type="text" name="role" placeholder="Função"
+                        <input type="text" name="role" value="{{ old('role') }}" placeholder="Função"
                             class="w-full p-2 border border-gray-300 rounded mb-4" required>
 
                         <div class="flex justify-end">

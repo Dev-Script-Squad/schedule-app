@@ -25,4 +25,9 @@ class EventClass extends Model
         return $this->belongsToMany(Event::class, 'event_id')
             ->withTimestamps();
     }
+    public function classEvents()
+    {
+        return $this->belongsToMany(EventContent::class, 'event_content_id')
+            ->withTimestamps();
+    }
 }
