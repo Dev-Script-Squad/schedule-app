@@ -28,13 +28,13 @@ class UserController extends Controller
         $user = $request->validated();
 
         if(!$user) {
+            
             return back()->withErrors([
                 'Preencha todos os campos corretamente!'
             ]);
         };
         User::create($user);
-
-        return Redirect::route('user.index');
+        return Redirect::route('user.index')->with('success', 'Usuário criado com sucesso!');
     }
 
     public function update(Request $request, $id)
