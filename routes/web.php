@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DirectorController;
@@ -16,7 +17,6 @@ Route::get('/home', function () {
     return view('home');
 });
 
-// Rotas de login!
 
 Route::post('/login', [LoginController::class, 'login'])->name('user.login');
 Route::get('/login', function () {
@@ -26,7 +26,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/', [LoginController::class, 'logout'])->name('user.logout');
 });
 
-// Rotas de admin (Diretor/Coordenador)
 
 Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
     // Route::get('/diretor-dashboard', [DirectorController::class, 'index']);
@@ -53,12 +52,13 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
             ->name('schoolclass.addTeachers');
         Route::delete('/{schoolclass}/remove-teachers/{teacher}', [SchoolClassController::class, 'removeTeachers'])
             ->name('schoolclass.removeTeachers');
-
     });
 
     Route::post('/create-student', [StudentController::class, 'store'])->name('student.store');
     Route::get('/students', [StudentController::class, 'index'])->name('student.index');
     Route::get('/teachers', [TeacherController::class, 'index'])->name('teacher.index');
+    
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 });
 
 Route::group(['middleware' => ['auth', 'role:professor']], function () {

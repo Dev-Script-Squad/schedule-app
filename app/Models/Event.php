@@ -20,9 +20,23 @@ class Event extends Model
         'student_id',
         'event_content_id'
     ];
-    public function schoolClasses()
+    public function schoolClass()
     {
-        return $this->belongsToMany(SchoolClass::class, 'school_class_id')
-            ->withTimestamps();
+        return $this->belongsTo(SchoolClass::class, 'school_class_id');
+    }
+
+    public function eventContent()
+    {
+        return $this->belongsTo(EventContent::class, 'event_content_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
     }
 }

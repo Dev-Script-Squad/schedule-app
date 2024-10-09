@@ -18,4 +18,9 @@ class EventContent extends Model
         'card_image',
         'card_color'
     ];
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'event_id');
+    }
 }

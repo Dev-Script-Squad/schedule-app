@@ -22,12 +22,16 @@ class EventClass extends Model
 
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'event_id')
-            ->withTimestamps();
+        return $this->hasMany(Event::class, 'school_class_id');
     }
-    public function classEvents()
+
+    public function eventContents()
     {
-        return $this->belongsToMany(EventContent::class, 'event_content_id')
-            ->withTimestamps();
+        return $this->hasMany(EventContent::class, 'event_content_id');
+    }
+
+    public function schoolClass()
+    {
+        return $this->belongsTo(SchoolClass::class, 'school_class_id');
     }
 }
