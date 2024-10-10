@@ -27,14 +27,8 @@ class UserController extends Controller
     {
         $user = $request->validated();
 
-        if(!$user) {
-            
-            return back()->withErrors([
-                'Preencha todos os campos corretamente!'
-            ]);
-        };
         User::create($user);
-        return Redirect::route('user.index')->with('success', 'Usuário criado com sucesso!');
+        return redirect()->route('user.index')->with('ok','Deu certo');
     }
 
     public function update(Request $request, $id)
@@ -56,6 +50,7 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with('success', 'Usuário atualizado com sucesso!');
     }
+    
     public function remove($id)
     {
         $user = User::findOrFail($id);

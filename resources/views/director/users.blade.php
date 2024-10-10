@@ -3,13 +3,6 @@
 @section('content')
 <div class="container mx-auto p-5">
 
-    <!-- Adicionar Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-    <!-- Adicionar Toastr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-
     @if (isset($user))
     <div class="flex justify-between items-center">
         <div class="mb-3">
@@ -96,7 +89,7 @@
             <h3 class="text-xl mb-4">Novo Usuário</h3>
             <form id="user-form" action="{{ route('user.store') }}" method="POST">
                 @csrf
-               <x-validation-error /> 
+              
 
 
                 <label for="name" class="block mb-1">Nome:</label>

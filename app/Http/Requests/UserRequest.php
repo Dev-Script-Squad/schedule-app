@@ -28,4 +28,10 @@ class UserRequest extends FormRequest
             'role' => 'required|string',
         ];
     }
+    public function messages()
+    {
+        return [
+            'email.unique' => 'O email já está em uso. Escolha outro.',
+        ];
+    }
 }
