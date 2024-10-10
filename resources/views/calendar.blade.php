@@ -25,15 +25,35 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
+                locale: 'pt-br',
+                navLinks: true,
+                eventLimit: true,
+                selectable: true,
                 editable: true,
-                droppable: true, // this allows things to be dropped onto the calendar
+                droppable: true, 
                 drop: function(arg) {
                     // is the "remove after drop" checkbox checked?
                     if (document.getElementById('drop-remove').checked) {
                         // if so, remove the element from the "Draggable Events" list
                         arg.draggedEl.parentNode.removeChild(arg.draggedEl);
                     }
-                }
+                },
+                eventDrop: function (event) {
+                    
+                },
+                eventClick: function (event) {
+                    
+                },
+                eventResize: function (event) {
+                    
+                },
+                select: function (event) {
+                    
+                },
+                events: function (event) {
+                    
+                },
+
             });
             calendar.render();
 
