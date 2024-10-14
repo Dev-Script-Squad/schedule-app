@@ -3,9 +3,9 @@
 
 <head>
     <meta charset='utf-8' />
-    <script src='../dist/index.global.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-    <script src='{{ asset('assets/fullcalendar/packages/core/locales-all.js') }}'></script>
+    {{-- <script src='../dist/index.global.js'></script> --}}
+    <script src='{{ asset('assets/fullcalendar/packages/core/locales-all.global.js') }}'></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var containerEl = document.getElementById('external-events-list');
@@ -19,6 +19,8 @@
             });
 
             var calendarEl = document.getElementById('calendar');
+            var loadEventsRoute = calendarEl.dataset.routeLoadEvents;
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 headerToolbar: {
                     left: 'prev,next today',
@@ -30,34 +32,36 @@
                 eventLimit: true,
                 selectable: true,
                 editable: true,
-                droppable: true, 
+                droppable: true,
+                events: loadEventsRoute, // Usando a rota diretamente
                 drop: function(arg) {
-                    // is the "remove after drop" checkbox checked?
                     if (document.getElementById('drop-remove').checked) {
-                        // if so, remove the element from the "Draggable Events" list
                         arg.draggedEl.parentNode.removeChild(arg.draggedEl);
                     }
                 },
-                eventDrop: function (event) {
-                    
+                eventDrop: function(event) {
+                    console.log('Evento movido:', event);
                 },
-                eventClick: function (event) {
-                    
+                eventClick: function(event) {
+                    console.log('Evento clicado:', event);
                 },
-                eventResize: function (event) {
-                    
+                eventResize: function(event) {
+                    console.log('Evento redimensionado:', event);
                 },
-                select: function (event) {
-                    
-                },
-                events: function (event) {
-                    
-                },
-
+                select: function(info) {
+                    console.log('Selecionado:', info);
+                }
             });
+
             calendar.render();
 
         });
+
+        // function routeEvents(route) {
+        //     document.getElementById('calendar').dataset.routeLoadEvents;
+        // }
+
+        // console.log(routeEvents(routeLoadEvents));
     </script>
     <style>
         body {
@@ -141,7 +145,8 @@
         </div>
 
         <div id='calendar-wrap'>
-            <div id='calendar'></div>
+            <div id='calendar' data-route-load-events="{{ route('calendar.loadEvents') }}">
+            </div>
         </div>
 
     </div>

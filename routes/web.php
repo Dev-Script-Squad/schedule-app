@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DirectorController;
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
     Route::get('/teachers', [TeacherController::class, 'index'])->name('teacher.index');
     
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+    Route::get('/load-event', [EventController::class, 'loadEvents'])->name('calendar.loadEvents');
 });
 
 Route::group(['middleware' => ['auth', 'role:professor']], function () {

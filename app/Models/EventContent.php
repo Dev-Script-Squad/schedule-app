@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EventContent extends Model
 {
     use HasFactory;
-    protected $table = 'reports';
+    protected $table = 'event_content';
     protected $primarykey = 'id';
     protected $fillable = [
         'title',
@@ -21,6 +21,6 @@ class EventContent extends Model
 
     public function events()
     {
-        return $this->hasMany(Event::class, 'event_id');
+        return $this->hasMany(Event::class, 'event_content_id');
     }
 }
