@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
     
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
     Route::get('/load-event', [EventController::class, 'loadEvents'])->name('calendar.loadEvents');
+    Route::put('/update-event', [EventController::class, 'update'])->name('calendar.updateEvent');
 });
 
 Route::group(['middleware' => ['auth', 'role:professor']], function () {

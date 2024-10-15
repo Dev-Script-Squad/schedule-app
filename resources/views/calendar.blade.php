@@ -161,9 +161,10 @@
 
     <head>
         <meta charset='utf-8' />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
     </head>
 
-    <body class="bg-gray-200">
+    <body class="bg-gray-200 z-index">
 
         <div id='wrap' class="">
             <div id='external-events' class="bg-gray-300 p-4 rounded-lg shadow-lg ml-[100px] mr-[75px] mb-5">
@@ -190,13 +191,13 @@
                     <input type='checkbox' id='drop-remove' class="mr-2" />
                     <label for='drop-remove'>remove after drop</label>
                 </p>
-
-                <x-add-register-modal class="" />
+                
+                <x-add-events-modal class="" />
             </div>
 
             <div id='calendar-wrap' class="ml-8">
                 <div id='calendar' data-route-load-events="{{ route('calendar.loadEvents') }}"
-                    class="w-full max-w-3xl mx-auto">
+                    data-route-update-event="{{ route('calendar.updateEvent') }}" class="w-full max-w-3xl mx-auto">
                 </div>
             </div>
 
@@ -207,6 +208,9 @@
 @endsection
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src='{{ asset('assets/fullcalendar/packages/core/locales-all.global.js') }}'></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -222,6 +226,7 @@
 
         var calendarEl = document.getElementById('calendar');
         var loadEventsRoute = calendarEl.dataset.routeLoadEvents;
+        var updateEventsRoute = calendarEl.dataset.routeUpdateEvent;
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
@@ -235,25 +240,69 @@
             selectable: true,
             editable: true,
             droppable: true,
+            eventResizableFromStart: true,
             events: loadEventsRoute,
+            updateEventsRoute,
             drop: function(arg) {
                 if (document.getElementById('drop-remove').checked) {
                     arg.draggedEl.parentNode.removeChild(arg.draggedEl);
                 }
             },
-            eventDrop: function(event) {
-                console.log('Evento movido:', event);
+            eventDrop: function(element) {
+                let start = moment(element.event.start).format("YYYY-MM-DD HH:mm:ss");
+                let end = moment(element.event.end).format("YYYY-MM-DD HH:mm:ss");
+
+                let newEvent = {
+                    _method: 'PUT',
+                    id: element.event.id,
+                    start: start,
+                    end: end
+                };
+
+                sendEvent(updateEventsRoute, newEvent);
             },
             eventClick: function(event) {
                 console.log('Evento clicado:', event);
             },
-            eventResize: function(event) {
-                console.log('Evento redimensionado:', event);
+            eventResize: function(element) {
+                let start = moment(element.event.start).format("YYYY-MM-DD HH:mm:ss");
+                let end = moment(element.event.end).format("YYYY-MM-DD HH:mm:ss");
+
+                let newEvent = {
+                    _method: 'PUT',
+                    id: element.event.id,
+                    start: start,
+                    end: end,
+                };
+
+                sendEvent(updateEventsRoute, newEvent);
             },
             select: function(info) {
                 console.log('Selecionado:', info);
             }
         });
+
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+
+        function sendEvent(route, data_) {
+            $.ajax({
+                url: route,
+                data: data_,
+                method: 'POST',
+                dataType: 'json',
+                success: function(json) {
+                    if (json) {
+                        location.reload()
+                    }
+                }
+            });
+        }
 
         calendar.render();
     });

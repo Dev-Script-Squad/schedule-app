@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Support\Carbon;
 
 class Event extends Model
 {
@@ -20,6 +22,21 @@ class Event extends Model
         'student_id',
         'event_content_id'
     ];
+
+    public function getStartAttributes($value) 
+    {
+        $dateStart = Carbon::createFromFormat('Y-m-d H-i-s', $value)->format('Y-m-d');
+        $timeStart = Carbon::createFromFormat('Y-m-d H-i-s', $value)->format('H-i-s');
+
+        return $this->start = $timeStart == '00:00:00' ? $dateStart : $value;
+    }
+    public function getEndAttributes($value) 
+    {
+        $dateEnd = Carbon::createFromFormat('Y-m-d H-i-s', $value)->format('Y-m-d');
+        $timeEnd = Carbon::createFromFormat('Y-m-d H-i-s', $value)->format('H-i-s');
+
+        return $this->end = $timeEnd == '00:00:00' ? $dateEnd : $value;
+    }
     public function schoolClass()
     {
         return $this->belongsTo(SchoolClass::class, 'school_class_id');
