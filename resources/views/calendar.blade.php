@@ -165,6 +165,21 @@
     </head>
 
     <body class="bg-gray-200 z-index">
+        @if (session('success'))
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <div id='wrap' class="">
             <div id='external-events' class="bg-gray-300 p-4 rounded-lg shadow-lg ml-[100px] mr-[75px] mb-5">
@@ -191,7 +206,7 @@
                     <input type='checkbox' id='drop-remove' class="mr-2" />
                     <label for='drop-remove'>remove after drop</label>
                 </p>
-                
+
                 <x-add-events-modal class="" />
             </div>
 
@@ -261,8 +276,13 @@
 
                 sendEvent(updateEventsRoute, newEvent);
             },
-            eventClick: function(event) {
-                console.log('Evento clicado:', event);
+            eventClick: function(element) {
+                let findEvent = {
+                    _method: 'GET',
+                    id: element.event.id,
+                };
+
+                
             },
             eventResize: function(element) {
                 let start = moment(element.event.start).format("YYYY-MM-DD HH:mm:ss");
@@ -320,12 +340,83 @@
         cursor: move;
     }
 
-    #calendar-wrap {
-        /* margin-left: 20px; */
+    #calendar {
+        background-color: #FAFAFA;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+        max-width: 1100px;
     }
 
-    #calendar {
-        max-width: 1100px;
-        margin: 0 auto;
+    #calendar-wrap {
+        margin-top: 20px;
+    }
+
+    .fc-header-toolbar {
+        background-color: #7b7878;
+        color: white;
+        padding: 10px;
+        border-radius: 8px 8px 0 0;
+        border-bottom: 2px solid #ffffff;
+    }
+
+    .fc-button {
+        background-color: #2196F3;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        margin: 0 5px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .fc-button:hover {
+        background-color: #1E88E5;
+    }
+
+    .fc-col-header-cell {
+        background-color: #BBDEFB;
+        font-weight: bold;
+        border-bottom: 1px solid #90CAF9;
+    }
+    .fc-event-past {
+        opacity: 0.5;
+    }
+    .fc-event:hover {
+        background-color: #2E7D32;
+    }
+
+    .fc-event {
+        background-color: #81C784;
+        /* Verde suave */
+        color: white;
+        border: 1px solid #388E3C;
+        border-radius: 8px;
+        padding: 5px;
+        transition: transform 0.2s;
+    }
+
+    .fc-event:hover {
+        transform: scale(1.05);
+    }
+
+
+    .fc-day-today {
+        background-color: #FFF176;
+        border: 2px solid #FDD835;
+        border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+        #calendar {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .fc-header-toolbar {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 </style>
