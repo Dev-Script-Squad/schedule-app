@@ -9,7 +9,7 @@ class EventContent extends Model
 {
     use HasFactory;
     protected $table = 'event_content';
-    protected $primarykey = 'id';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'title',
         'subtitle',

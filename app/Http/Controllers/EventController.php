@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventContent;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -29,19 +30,51 @@ class EventController extends Controller
         return response()->json($formattedEvents);
     }
 
+
+    public function show(Event $event)
+    {
+        return response()->json($event->load('eventContent'));
+    }
+    
+    // public function show($id)
+    // {
+    //     $event = Event::with('eventContent')->find($id);
+
+    //     if (!$event) {
+    //         return response()->json(['message' => 'Evento não encontrado.'], 404);
+    //     }
+
+    //     return response()->json($event);
+    // }
+
+
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'subtitle' => 'required|string|max:255',
+            'background_image' => 'nullable|string',
+            'card_image' => 'nullable|string',
+            // 'background_image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            // 'card_image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'description' => 'nullable|string',
             'start' => 'required|date',
             'end' => 'required|date|after_or_equal:start',
-            'event_content_id' => 'required|exists:event_content,id',
             'type' => 'required|string',
         ]);
 
         $validated['user_id'] = Auth::id();
+        $eventContent = EventContent::create([
+            'title' => $validated['title'],
+            'subtitle' => $validated['subtitle'],
+            'description' => $validated['description'] ?? '',
+            'background_image' => $validated['background_image'] ?? null,
+            'card_image' => $validated['card_image'] ?? null,
+            'card_color' => $request->input('card_color', '#FFFFFF'),
+        ]);
 
+        $validated['event_content_id'] = $eventContent->id;
         Event::create($validated);
 
         return redirect()->back()->with('success', 'Evento criado com sucesso!');

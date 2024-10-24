@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
         Route::post('/', [SchoolClassController::class, 'store'])->name('schoolclass.store');
         Route::get('/{schoolclass}', [SchoolClassController::class, 'show'])->name('schoolclass.show');
         Route::delete('/{schoolclass}', [SchoolClassController::class, 'remove'])->name('schoolclass.remove');
-        
+
         Route::post('/{schoolclass}/add-students', [SchoolClassController::class, 'addStudents'])
             ->name('schoolclass.addStudents');
         Route::delete('/{schoolclass}/remove-students/{student}', [SchoolClassController::class, 'removeStudents'])
@@ -58,12 +58,14 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
     Route::post('/create-student', [StudentController::class, 'store'])->name('student.store');
     Route::get('/students', [StudentController::class, 'index'])->name('student.index');
     Route::get('/teachers', [TeacherController::class, 'index'])->name('teacher.index');
-    
+
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
     Route::get('/load-event', [EventController::class, 'loadEvents'])->name('calendar.loadEvents');
     Route::put('/update-event', [EventController::class, 'update'])->name('calendar.updateEvent');
 
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+
 
 });
 
