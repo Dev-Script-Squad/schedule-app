@@ -52,11 +52,14 @@
                 </p>
 
                 <x-add-events-modal class="" />
+                <x-update-events-modal class="" />
             </div>
 
             <div id='calendar-wrap' class="ml-8">
                 <div id='calendar' data-route-load-events="{{ route('calendar.loadEvents') }}"
-                    data-route-update-event="{{ route('calendar.updateEvent') }}" class="w-full max-w-3xl mx-auto">
+                    data-route-update-event="{{ route('calendar.updateEvent') }}"
+                    data-route-get-event="{{ route('events.show', ':id') }}"
+                    data-route-delete-event="{{ route('events.remove', ':id') }}" class="w-full max-w-3xl mx-auto">
                 </div>
             </div>
 
@@ -120,7 +123,10 @@
                     end: end
                 };
 
-                sendEvent(updateEventsRoute, newEvent);
+                let updateUrl = `{{ route('calendar.updateEvent', ':id') }}`.replace(':id', element
+                    .event.id);
+
+                sendEvent(updateUrl, newEvent);
             },
             eventClick: function(element) {
                 let eventId = element.event.id;
@@ -135,30 +141,33 @@
                         console.log("Evento retornado:",
                             event);
 
-                        if (event && event.event_content) {
-                            $('#subtitle').val(event.event_content.subtitle || '');
-                            $('#description').val(event.event_content.description ||
+                        $('#titleModalUpdate').text('Evento - ' + event.title ||
+                            'Sem título');
+
+                        $('#subtitleUpdate').val(event.event_content.subtitle || '');
+                        $('#descriptionUpdate').val(event.event_content.description ||
                             '');
-                            $('#card_color').val(event.event_content.card_color || '');
-                            $('#background_image').val(event.event_content.background_image || '');
-                        } else {
-                            console.warn("Conteúdo do evento não encontrado para o evento.");
-                        }
+                        $('#card_colorUpdate').val(event.event_content.card_color ||
+                            '');
+                        $('#background_imageUpdate').not('[type="file"]').val(event
+                            .event_content.background_image || '');
+                        $('#card_imageUpdate').not('[type="file"]').val(event
+                            .event_content.card_image || '');
+                        $('#titleUpdate').val(event.title || '');
+                        $('#typeUpdate').val(event.type || '');
+                        $('#startUpdate').val(moment(event.start).format(
+                            "YYYY-MM-DDTHH:mm"));
+                        $('#endUpdate').val(moment(event.end).format(
+                            "YYYY-MM-DDTHH:mm"));
 
-                        $('#title').val(event.title || '');
-                        $('#type').val(event.type || '');
-                        $('#start').val(moment(event.start).format("YYYY-MM-DDTHH:mm"));
-                        $('#end').val(moment(event.end).format("YYYY-MM-DDTHH:mm"));
-
-                        document.getElementById('myModal').classList.remove('hidden');
+                        document.getElementById('myModalUpdate').classList.remove(
+                            'hidden');
 
                     },
                     error: function(xhr, status, error) {
                         console.error("Erro na requisição AJAX:", status, error);
                     }
                 });
-                // console.log(eita)
-
             },
             eventResize: function(element) {
                 let start = moment(element.event.start).format("YYYY-MM-DD HH:mm:ss");
@@ -179,10 +188,11 @@
         });
 
         // var getEventRoute = function(id) {
-        //     return `{{ route('events.show', '') }}/${id}`;
+        //     return `{{ route('events.show', ':id') }}`.replace(':id', id);
         // };
+
         var getEventRoute = function(id) {
-            return `{{ route('events.show', ':id') }}`.replace(':id', id);
+            return calendarEl.dataset.routeGetEvent.replace(':id', id);
         };
 
 
@@ -200,6 +210,9 @@
                 data: data_,
                 method: 'POST',
                 dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 success: function(json) {
                     if (json) {
                         // location.reload();
@@ -208,6 +221,7 @@
                 }
             });
         }
+        
 
         calendar.render();
     });

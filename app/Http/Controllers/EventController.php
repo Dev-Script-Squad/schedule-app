@@ -31,21 +31,25 @@ class EventController extends Controller
     }
 
 
-    public function show(Event $event)
-    {
-        return response()->json($event->load('eventContent'));
-    }
-    
-    // public function show($id)
+    // public function show(Event $event)
     // {
-    //     $event = Event::with('eventContent')->find($id);
-
-    //     if (!$event) {
-    //         return response()->json(['message' => 'Evento não encontrado.'], 404);
+    //     if(request()->ajax()) {
+    //         return response()->json($event->load('eventContent'));
     //     }
 
-    //     return response()->json($event);
+    //     return view('update-events-modal', compact('event'));
+    //     // return response()->json($event->load('eventContent'));
     // }
+
+    public function show(Event $event)
+    {
+        if (request()->ajax()) {
+            return response()->json($event->load('eventContent'));
+        }
+
+        // Se não for ajax, retorna a view do modal
+        return view('components.update-events-modal', compact('event'));
+    }
 
 
 
@@ -89,5 +93,18 @@ class EventController extends Controller
         $event->save();
 
         return response()->json(true);
+    }
+
+    // public function update(Request $request, Event $event)
+    // {
+    //     $event->update($request->all());
+    //     return response()->json(true);
+    // }
+
+    public function remove(Event $event)
+    {
+        dd($event);
+        $event->delete();
+        return redirect()->route('calendar.index')->with('success', 'Evento removido com sucesso!');
     }
 }
