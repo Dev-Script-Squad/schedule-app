@@ -57,7 +57,7 @@
 
             <div id='calendar-wrap' class="ml-8">
                 <div id='calendar' data-route-load-events="{{ route('calendar.loadEvents') }}"
-                    data-route-update-event="{{ route('calendar.updateEvent') }}"
+                    data-route-update-event="{{ route('calendar.updateEvent', ':id') }}"
                     data-route-get-event="{{ route('events.show', ':id') }}"
                     data-route-delete-event="{{ route('events.remove', ':id') }}" class="w-full max-w-3xl mx-auto">
                 </div>
@@ -120,10 +120,10 @@
                     _method: 'PUT',
                     id: element.event.id,
                     start: start,
-                    end: end
+                    end: end,
                 };
 
-                let updateUrl = `{{ route('calendar.updateEvent', ':id') }}`.replace(':id', element
+                let updateUrl = `{{ route('calendar.updateDropResize', ':id') }}`.replace(':id', element
                     .event.id);
 
                 sendEvent(updateUrl, newEvent);
@@ -131,8 +131,6 @@
             eventClick: function(element) {
                 let eventId = element.event.id;
                 let url = getEventRoute(eventId);
-                // console.log("URL da requisição:", url);
-                // console.log(eventId)
 
                 $.ajax({
                     url: url,
@@ -149,10 +147,10 @@
                             '');
                         $('#card_colorUpdate').val(event.event_content.card_color ||
                             '');
-                        $('#background_imageUpdate').not('[type="file"]').val(event
-                            .event_content.background_image || '');
-                        $('#card_imageUpdate').not('[type="file"]').val(event
-                            .event_content.card_image || '');
+                        // $('#background_imageUpdate').val(event
+                        //     .event_content.background_image || '');
+                        // $('#card_imageUpdate').val(event
+                        //     .event_content.card_image || '');
                         $('#titleUpdate').val(event.title || '');
                         $('#typeUpdate').val(event.type || '');
                         $('#startUpdate').val(moment(event.start).format(
@@ -160,8 +158,15 @@
                         $('#endUpdate').val(moment(event.end).format(
                             "YYYY-MM-DDTHH:mm"));
 
+                        document.getElementById('eventFormUpdate').action =
+                            `/update-event/${event.id}`;
+
+                        document.getElementById('deleteEventForm').action =
+                            `/events/${event.id}`;
+
                         document.getElementById('myModalUpdate').classList.remove(
                             'hidden');
+
 
                     },
                     error: function(xhr, status, error) {
@@ -180,16 +185,15 @@
                     end: end,
                 };
 
-                sendEvent(updateEventsRoute, newEvent);
+                let updateUrl = `{{ route('calendar.updateDropResize', ':id') }}`.replace(':id', element
+                    .event.id);
+
+                sendEvent(updateUrl, newEvent);
             },
             select: function(info) {
                 console.log('Selecionado:', info);
             }
         });
-
-        // var getEventRoute = function(id) {
-        //     return `{{ route('events.show', ':id') }}`.replace(':id', id);
-        // };
 
         var getEventRoute = function(id) {
             return calendarEl.dataset.routeGetEvent.replace(':id', id);
@@ -221,7 +225,7 @@
                 }
             });
         }
-        
+
 
         calendar.render();
     });

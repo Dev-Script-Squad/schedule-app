@@ -26,7 +26,7 @@
         </div>
 
         <div class="p-4 md:p-5 max-h-[500px] overflow-y-auto custom-scroll">
-            <form id="eventForm" action="{{ route('events.store') }}" method="POST">
+            <form id="eventForm" action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 grid-cols-1 sm:grid-cols-2">
                     <div class="col-span-2">
@@ -95,7 +95,12 @@
                                    dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400">
                         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Aceitamos arquivos PNG, JPG ou GIF.</p>
                         <div id="imageBackgroundPreview" class="w-64 h-64 bg-gray-200 flex items-center justify-center">
-                            <span class="text-gray-500">Nenhuma imagem</span>
+                            @if (isset($eventContent) && $eventContent->background_image)
+                                <img src="{{ asset('storage/' . $eventContent->background_image) }}"
+                                    alt="Background Image">
+                            @else
+                                <span class="text-gray-500">Nenhuma imagem</span>
+                            @endif
                         </div>
                     </div>
 
@@ -121,7 +126,11 @@
                         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Aceitamos arquivos PNG, JPG ou GIF.
                         </p>
                         <div id="imageCardPreview" class="w-64 h-64 bg-gray-200 flex items-center justify-center">
-                            <span class="text-gray-500">Nenhuma imagem</span>
+                            @if (isset($eventContent) && $eventContent->card_image)
+                                <img src="{{ asset('storage/' . $eventContent->card_image) }}" alt="Card Image">
+                            @else
+                                <span class="text-gray-500">Nenhuma imagem</span>
+                            @endif
                         </div>
                     </div>
                 </div>

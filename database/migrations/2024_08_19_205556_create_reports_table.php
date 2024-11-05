@@ -20,11 +20,6 @@ return new class extends Migration {
             $table->unsignedInteger('event_school_class_id');
             $table->timestamps();
         });
-
-        // Schema::table('events', function (Blueprint $table) {
-        //     $table->foreign('event_school_class_id')->references('id')->on('event_class');
-        //     $table->foreign('student_id')->references('id')->on('students');
-        // });
     }
 
     /**

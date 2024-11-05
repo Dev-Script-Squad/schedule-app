@@ -18,7 +18,7 @@
         </div>
 
         <div class="p-4 md:p-5 max-h-[500px] overflow-y-auto custom-scroll">
-            <form id="eventFormUpdate" action="{{ route('calendar.updateEvent') }}" method="POST">
+            <form id="eventFormUpdate" action="" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="grid gap-4 mb-4 grid-cols-1 sm:grid-cols-2">
@@ -127,7 +127,7 @@
             </form>
 
             <div class="event-delete">
-                <form id="deleteEventForm" action="{{ route('events.remove', ':id') }}" method="POST" 
+                <form id="deleteEventForm" action="" method="POST" 
                     onsubmit="return confirm('Tem certeza que deseja deletar?');">
 
                     <input type="hidden" name="event_id" id="eventIdForDelete">
@@ -145,16 +145,6 @@
     document.getElementById('closeModalUpdate').onclick = function() {
         document.getElementById('myModalUpdate').classList.add('hidden');
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        calendar.on('eventClick', function(element) {
-            document.getElementById('eventIdForDelete').value = element.event.id;
-
-            let deleteForm = document.getElementById('deleteEventForm');
-            let newAction = deleteForm.action.replace(':id', element.event.id);
-            deleteForm.action = newAction;
-        });
-    });
 </script>
 
 <style>

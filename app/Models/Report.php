@@ -24,5 +24,4 @@ class Report extends Model
         return $this->belongsToMany(Student::class, 'student_class')
             ->withTimestamps();
     }
-
 }

@@ -38,17 +38,16 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
         Route::patch('/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('/{id}', [UserController::class, 'remove'])->name('user.remove');
     });
+
     Route::prefix('school-classes')->group(function () {
         Route::get('/', [SchoolClassController::class, 'index'])->name('schoolclass.index');
         Route::post('/', [SchoolClassController::class, 'store'])->name('schoolclass.store');
         Route::get('/{schoolclass}', [SchoolClassController::class, 'show'])->name('schoolclass.show');
         Route::delete('/{schoolclass}', [SchoolClassController::class, 'remove'])->name('schoolclass.remove');
-
         Route::post('/{schoolclass}/add-students', [SchoolClassController::class, 'addStudents'])
             ->name('schoolclass.addStudents');
         Route::delete('/{schoolclass}/remove-students/{student}', [SchoolClassController::class, 'removeStudents'])
             ->name('schoolclass.removeStudents');
-
         Route::post('/{schoolclass}/add-teachers', [SchoolClassController::class, 'addTeachers'])
             ->name('schoolclass.addTeachers');
         Route::delete('/{schoolclass}/remove-teachers/{teacher}', [SchoolClassController::class, 'removeTeachers'])
@@ -59,11 +58,10 @@ Route::group(['middleware' => ['auth', 'role:Diretor']], function () {
     Route::get('/students', [StudentController::class, 'index'])->name('student.index');
     Route::get('/teachers', [TeacherController::class, 'index'])->name('teacher.index');
 
-
-
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
     Route::get('/load-event', [EventController::class, 'loadEvents'])->name('calendar.loadEvents');
-    Route::put('/update-event', [EventController::class, 'update'])->name('calendar.updateEvent');
+    Route::put('/update-event/{event}', [EventController::class, 'update'])->name('calendar.updateEvent');
+    Route::put('/update-event', [EventController::class, 'updateDropResize'])->name('calendar.updateDropResize');
 
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
